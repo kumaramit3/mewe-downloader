@@ -1,6 +1,6 @@
 # How to use the Chrome Extension -
 
-Download the dist folder. Type `chrome://extensions` in your url bar. Switch on Developer Mode (top right corner).
+Clone the dist folder. Type `chrome://extensions` in your url bar. Switch on Developer Mode (top right corner).
 Afterwards, click on Load Unpacked and select the dist folder you have downloaded.
 
 # React + TypeScript + Vite
