@@ -4,23 +4,22 @@ class BackgroundProcess {
     this.init();
   }
   init() {
-    chrome.webRequest.onCompleted.addListener(
-      (details) => {
-        if (details.tabId === -1)
-          return;
-        chrome.action.setPopup({
-          popup: "index.html",
-          tabId: details.tabId
-        });
-      },
-      { urls: ["https://mewe.com/*", "https://cdn.mewe.com/*"] }
-    );
-    chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
-      if (tabId === -1)
-        return;
-      if (changeInfo.status === "complete") {
-        this.checkUrl(tabId);
-      }
+    chrome.tabs.onActivated.addListener((activeInfo) => {
+      const { tabId } = activeInfo;
+      chrome.tabs.get(tabId, (tab) => {
+        var _a;
+        if ((_a = tab.url) == null ? void 0 : _a.includes("mewe.com")) {
+          chrome.action.setPopup({ popup: "index.html", tabId });
+        } else
+          chrome.action.setPopup({ popup: "", tabId });
+      });
+    });
+    chrome.tabs.onUpdated.addListener((tabId, changedInfo, tab) => {
+      var _a;
+      if ((_a = tab.url) == null ? void 0 : _a.includes("mewe.com")) {
+        chrome.action.setPopup({ popup: "index.html", tabId });
+      } else
+        chrome.action.setPopup({ popup: "", tabId });
     });
     chrome.scripting.getRegisteredContentScripts({
       ids: ["hook"]
@@ -87,19 +86,6 @@ class BackgroundProcess {
       }
     );
     return cnt > 0 ? cnt.toString() : "";
-  }
-  checkUrl(tabId) {
-    chrome.tabs.get(tabId, (tab) => {
-      var _a;
-      if ((_a = tab.url) == null ? void 0 : _a.startsWith("https://mewe.com")) {
-        chrome.action.setPopup({
-          popup: "index.html",
-          tabId
-        });
-      } else {
-        chrome.action.setPopup({ popup: "", tabId });
-      }
-    });
   }
 }
 new BackgroundProcess();

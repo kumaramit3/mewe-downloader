@@ -19,8 +19,7 @@
     "activeTab",
     "tabs",
     "downloads",
-    "scripting",
-    "webRequest"
+    "scripting"
   ],
   "content_scripts": [
     {
@@ -28,14 +27,14 @@
         "assets/content.ts-loader-jgLQnP26.js"
       ],
       "matches": [
-        "https://mewe.com/*"
+        "*://mewe.com/*"
       ]
     }
   ],
   "web_accessible_resources": [
     {
       "matches": [
-        "https://mewe.com/*"
+        "*://mewe.com/*"
       ],
       "resources": [
         "src/images/*"
@@ -44,7 +43,7 @@
     },
     {
       "matches": [
-        "https://mewe.com/*"
+        "*://mewe.com/*"
       ],
       "resources": [
         "assets/content.ts-BdWueh4j.js"
@@ -63,6 +62,6 @@
     }
   ],
   "host_permissions": [
-    "https://mewe.com/*"
+    "*://mewe.com/*"
   ]
 }
