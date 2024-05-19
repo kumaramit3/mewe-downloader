@@ -6,20 +6,28 @@ class BackgroundProcess {
   init() {
     chrome.tabs.onActivated.addListener((activeInfo) => {
       const { tabId } = activeInfo;
-      chrome.tabs.get(tabId, (tab) => {
+      chrome.tabs.get(tabId, async (tab) => {
         var _a;
-        if ((_a = tab.url) == null ? void 0 : _a.includes("mewe.com")) {
-          chrome.action.setPopup({ popup: "index.html", tabId });
-        } else
-          chrome.action.setPopup({ popup: "", tabId });
+        try {
+          if ((_a = tab.url) == null ? void 0 : _a.includes("mewe.com")) {
+            await chrome.action.setPopup({ popup: "index.html", tabId });
+          } else
+            await chrome.action.setPopup({ popup: "", tabId });
+        } catch (error) {
+          console.warn(error);
+        }
       });
     });
-    chrome.tabs.onUpdated.addListener((tabId, changedInfo, tab) => {
+    chrome.tabs.onUpdated.addListener(async (tabId, changedInfo, tab) => {
       var _a;
-      if ((_a = tab.url) == null ? void 0 : _a.includes("mewe.com")) {
-        chrome.action.setPopup({ popup: "index.html", tabId });
-      } else
-        chrome.action.setPopup({ popup: "", tabId });
+      try {
+        if ((_a = tab.url) == null ? void 0 : _a.includes("mewe.com")) {
+          await chrome.action.setPopup({ popup: "index.html", tabId });
+        } else
+          await chrome.action.setPopup({ popup: "", tabId });
+      } catch (error) {
+        console.warn(error);
+      }
     });
     chrome.scripting.getRegisteredContentScripts({
       ids: ["hook"]

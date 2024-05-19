@@ -3,6 +3,8 @@
 Clone the repo. Type `chrome://extensions` in your url bar. Switch on Developer Mode (top right corner).
 Afterwards, click on Load Unpacked and select the dist folder you have downloaded.
 
+** Pin the extension to save Mewe Stories **
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
